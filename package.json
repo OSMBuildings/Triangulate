@@ -1,13 +1,13 @@
 {
-  "name": "Triangulate",
+  "name": "GeoJSON.triangulate",
   "version": "0.1.0",
   "homepage": "http://osmbuildings.org",
-  "description": "GeoJSON triangulation library. Mainly used for OSM Buildings backend + frontend.",
-  "main": "dist/Triangulate.js",
+  "description": "GeoJSON triangulation scripts collection. Mainly used for OSM Buildings backend + frontend.",
+  "main": "dist/GeoJSON.triangulate.js",
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/OSMBuildings/Triangulate.git"
+    "url": "https://github.com/OSMBuildings/GeoJSON.triangulate.git"
   },
   "author": "@kekscom",
   "dependencies": {

@@ -8,27 +8,33 @@ module.exports = function(grunt) {
       options: {
         globals: {}
       },
-      all: 'src/index.js'
+      all: [
+        'src/GeoJSON.js',
+        'src/triangulate.js',
+        'src/vector.js'
+      ]
     },
 
     concat: {
       default: {
         options: {
-          separator: "\n",
-          banner: "\n(function(global) {",
-          footer: "if (typeof global.define === 'function') {\n"+
-            "global.define([], Triangulate);\n"+
-          "} else if (typeof global.exports === 'object') {\n"+
-            "global.module.exports = Triangulate;\n"+
-          "} else {\n"+
-            "global.Triangulate = Triangulate;\n"+
+          separator: '\n',
+          banner: "(function(global) {",
+          footer: "if (typeof global.define === 'function') {"+
+          "global.define([], GeoJSON);"+
+          "} else if (typeof global.exports === 'object') {"+
+          "global.module.exports = GeoJSON;"+
+          "} else {"+
+          "global.GeoJSON = GeoJSON;"+
           "}\n"+
-          "}(this));\n"
+          "}(this));"
         },
         src: [
-          "node_modules/earcut/src/earcut.js",
-          "node_modules/Color/dist/Color.debug.js",
-          "src/index.js"
+          'node_modules/Color/dist/Color.debug.js',
+          'node_modules/earcut/src/earcut.js',
+          'src/GeoJSON.js',
+          'src/triangulate.js',
+          'src/vector.js'
         ],
         dest: 'dist/<%=pkg.name%>.debug.js'
       }
