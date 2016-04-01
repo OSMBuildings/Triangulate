@@ -26,8 +26,7 @@ module.exports = function(grunt) {
           "}(this));\n"
         },
         src: [
-          //"node_modules/earcut/dist/earcut.dev.js",
-          "src/earcut.dev.js",
+          "node_modules/earcut/src/earcut.js",
           "node_modules/Color/dist/Color.debug.js",
           "src/index.js"
         ],
