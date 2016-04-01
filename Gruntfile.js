@@ -8,20 +8,28 @@ module.exports = function(grunt) {
       options: {
         globals: {}
       },
-      all: 'src/Triangulate.js'
+      all: 'src/index.js'
     },
 
     concat: {
       default: {
         options: {
           separator: "\n",
-          banner: "(function(global) {",
-          footer: "}(this));"
+          banner: "\n(function(global) {",
+          footer: "if (typeof global.define === 'function') {\n"+
+            "global.define([], Triangulate);\n"+
+          "} else if (typeof global.exports === 'object') {\n"+
+            "global.module.exports = Triangulate;\n"+
+          "} else {\n"+
+            "global.Triangulate = Triangulate;\n"+
+          "}\n"+
+          "}(this));\n"
         },
         src: [
-          "node_modules/earcut/dist/earcut.dev.js",
+          //"node_modules/earcut/dist/earcut.dev.js",
+          "src/earcut.dev.js",
           "node_modules/Color/dist/Color.debug.js",
-          "src/Triangulate.js"
+          "src/index.js"
         ],
         dest: 'dist/<%=pkg.name%>.debug.js'
       }
