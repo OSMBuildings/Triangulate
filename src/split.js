@@ -1,5 +1,5 @@
 
-var triangulate = {
+var split = {
 
   NUM_Y_SEGMENTS: 24,
   NUM_X_SEGMENTS: 32,

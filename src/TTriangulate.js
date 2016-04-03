@@ -1,7 +1,5 @@
 
-if (GeoJSON === undefined) {
-  var GeoJSON = {};
-}
+var Triangulate = {};
 
 (function() {
 
@@ -72,7 +70,7 @@ if (GeoJSON === undefined) {
     // straw
   };
 
-  GeoJSON.getPosition = function(geometry) {
+  Triangulate.getPosition = function(geometry) {
     var coordinates = geometry.coordinates;
     switch (geometry.type) {
       case 'Point':
@@ -91,7 +89,7 @@ if (GeoJSON === undefined) {
     }
   };
 
-  GeoJSON.triangulate = function(res, id, feature, position, color) {
+  Triangulate.split = function(res, id, feature, position, color) {
     var geometries = flattenGeometry(feature.geometry);
     for (var i = 0, il = geometries.length; i<il; i++) {
       process(res, id, feature.properties, geometries[i], position, color);
@@ -132,24 +130,24 @@ if (GeoJSON === undefined) {
   function addWalls(res, properties, geometry, center, radius, H, Z, color) {
     switch (properties.shape) {
       case 'cylinder':
-        triangulate.cylinder(res, center, radius, radius, H, Z, color);
+        split.cylinder(res, center, radius, radius, H, Z, color);
       break;
 
       case 'cone':
-        triangulate.cylinder(res, center, radius, 0, H, Z, color);
+        split.cylinder(res, center, radius, 0, H, Z, color);
       break;
 
       case 'dome':
-        triangulate.dome(res, center, radius, (H || radius), Z, color);
+        split.dome(res, center, radius, (H || radius), Z, color);
       break;
 
       case 'sphere':
-        triangulate.sphere(res, center, radius, (H || 2*radius), Z, color);
+        split.sphere(res, center, radius, (H || 2*radius), Z, color);
       break;
 
       case 'pyramid':
       case 'pyramidal':
-        triangulate.pyramid(res, geometry, center, H, Z, color);
+        split.pyramid(res, geometry, center, H, Z, color);
       break;
 
       case 'none':
@@ -169,7 +167,7 @@ if (GeoJSON === undefined) {
           }
         }
 
-        triangulate.extrusion(res, geometry, H, Z, color, [0, WINDOWS_PER_METER, ty1/H, ty2/H]);
+        split.extrusion(res, geometry, H, Z, color, [0, WINDOWS_PER_METER, ty1/H, ty2/H]);
     }
   }
 
@@ -184,28 +182,28 @@ if (GeoJSON === undefined) {
 
     switch (properties.roofShape) {
       case 'cone':
-        triangulate.cylinder(res, center, radius, 0, H, Z, color);
+        split.cylinder(res, center, radius, 0, H, Z, color);
         break;
 
       case 'dome':
       case 'onion':
-        triangulate.dome(res, center, radius, (H || radius), Z, color);
+        split.dome(res, center, radius, (H || radius), Z, color);
         break;
 
       case 'pyramid':
       case 'pyramidal':
         if (properties.shape === 'cylinder') {
-          triangulate.cylinder(res, center, radius, 0, H, Z, color);
+          split.cylinder(res, center, radius, 0, H, Z, color);
         } else {
-          triangulate.pyramid(res, geometry, center, H, Z, color);
+          split.pyramid(res, geometry, center, H, Z, color);
         }
         break;
 
       default:
         if (properties.shape === 'cylinder') {
-          triangulate.circle(res, center, radius, Z, color);
+          split.circle(res, center, radius, Z, color);
         } else {
-          triangulate.polygon(res, geometry, Z, color);
+          split.polygon(res, geometry, Z, color);
         }
     }
   }

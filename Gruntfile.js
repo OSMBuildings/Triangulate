@@ -9,13 +9,15 @@ module.exports = function(grunt) {
         globals: {}
       },
       all: [
-        'src/GeoJSON.js',
-        'src/triangulate.js',
-        'src/vector.js'
+        'src/vec2.js',
+        'src/vec3.js',
+        'src/split.js',
+        'src/Triangulate.js'
       ]
     },
 
     concat: {
+
       default: {
         options: {
           separator: '\n',
@@ -34,10 +36,24 @@ module.exports = function(grunt) {
           'node_modules/earcut/src/earcut.js',
           'src/vec2.js',
           'src/vec3.js',
-          'src/triangulate.js',
-          'src/GeoJSON.js'
+          'src/split.js',
+          'src/Triangulate.js'
         ],
         dest: 'dist/<%=pkg.name%>.debug.js'
+      },
+
+      'bundle': {
+        options: {
+          separator: '\n'
+        },
+        src: [
+          'lib/earcut.custom.js',
+          'src/vec2.js',
+          'src/vec3.js',
+          'src/split.js',
+          'src/Triangulate.js'
+        ],
+        dest: 'dist/<%=pkg.name%>.bundle.js'
       }
     },
 
