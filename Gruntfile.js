@@ -33,7 +33,7 @@ module.exports = function(grunt) {
         },
         src: [
           'node_modules/Color/src/Color.js',
-          'node_modules/earcut/src/earcut.js',
+          'lib/earcut.custom.js',
           'src/vec2.js',
           'src/vec3.js',
           'src/split.js',
