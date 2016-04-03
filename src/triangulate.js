@@ -14,7 +14,7 @@ var triangulate = {
   },
 
   triangle: function(data, a, b, c, color) {
-    var n = vector.normal3(a, b, c);
+    var n = vec3.normal(a, b, c);
     [].push.apply(data.vertices, [].concat(a, c, b));
     [].push.apply(data.normals,  [].concat(n, n, n));
     [].push.apply(data.colors,   [].concat(color, color, color));
@@ -259,7 +259,7 @@ var triangulate = {
       for (var r = 0; r < last; r++) {
         a = ring[r];
         b = ring[r+1];
-        L = vector.len2(vector.sub2(a, b));
+        L = vec2.len(vec2.sub(a, b));
 
         tx1 = (tx[0]*L) <<0;
         tx2 = (tx[1]*L) <<0;
@@ -269,7 +269,7 @@ var triangulate = {
         v2 = [ b[0], b[1], Z+height];
         v3 = [ a[0], a[1], Z+height];
 
-        n = vector.normal3(v0, v1, v2);
+        n = vec3.normal(v0, v1, v2);
         [].push.apply(data.vertices, [].concat(v0, v2, v1, v0, v3, v2));
         [].push.apply(data.normals,  [].concat(n, n, n, n, n, n));
         [].push.apply(data.colors,   [].concat(color, color, color, color, color, color));

@@ -21,20 +21,21 @@ module.exports = function(grunt) {
           separator: '\n',
           banner: "(function(global) {",
           footer: "if (typeof global.define === 'function') {"+
-          "global.define([], GeoJSON);"+
+          "global.define([], <%=pkg.name%>);"+
           "} else if (typeof global.exports === 'object') {"+
-          "global.module.exports = GeoJSON;"+
+          "global.exports = <%=pkg.name%>;"+
           "} else {"+
-          "global.GeoJSON = GeoJSON;"+
+          "global.<%=pkg.name%> = <%=pkg.name%>;"+
           "}\n"+
           "}(this));"
         },
         src: [
-          'node_modules/Color/dist/Color.debug.js',
+          'node_modules/Color/src/Color.js',
           'node_modules/earcut/src/earcut.js',
-          'src/GeoJSON.js',
+          'src/vec2.js',
+          'src/vec3.js',
           'src/triangulate.js',
-          'src/vector.js'
+          'src/GeoJSON.js'
         ],
         dest: 'dist/<%=pkg.name%>.debug.js'
       }

@@ -1,5 +1,5 @@
 {
-  "name": "GeoJSON.triangulate",
+  "name": "Triangulate",
   "version": "0.1.0",
   "homepage": "http://osmbuildings.org",
   "description": "GeoJSON triangulation scripts collection. Mainly used for OSM Buildings backend + frontend.",
@@ -7,7 +7,7 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/OSMBuildings/GeoJSON.triangulate.git"
+    "url": "https://github.com/OSMBuildings/Triangulate.git"
   },
   "author": "@kekscom",
   "dependencies": {
