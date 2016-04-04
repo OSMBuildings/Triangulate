@@ -17,7 +17,6 @@ module.exports = function(grunt) {
     },
 
     concat: {
-
       default: {
         options: {
           separator: '\n',
@@ -39,28 +38,6 @@ module.exports = function(grunt) {
           'src/split.js',
           'src/Triangulate.js'
         ],
-        dest: 'dist/<%=pkg.name%>.debug.js'
-      },
-
-      'bundle': {
-        options: {
-          separator: '\n'
-        },
-        src: [
-          'lib/earcut.custom.js',
-          'src/vec2.js',
-          'src/vec3.js',
-          'src/split.js',
-          'src/Triangulate.js'
-        ],
-        dest: 'dist/<%=pkg.name%>.bundle.js'
-      }
-    },
-
-    uglify: {
-      default: {
-        options: {},
-        src: 'dist/<%=pkg.name%>.debug.js',
         dest: 'dist/<%=pkg.name%>.js'
       }
     }
@@ -68,12 +45,10 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('default', 'Development build', function() {
     grunt.log.writeln('\033[1;36m'+ grunt.template.date(new Date(), 'yyyy-mm-dd HH:MM:ss') +'\033[0m');
     grunt.task.run('concat');
-    grunt.task.run('uglify');
   });
 
   grunt.registerTask('release', 'Release', function() {
