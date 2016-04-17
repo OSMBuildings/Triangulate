@@ -1424,4 +1424,4 @@ return Triangulate;
 
 }());
 
-if (typeof exports === 'object') { exports = Triangulate; }
+if (typeof module === 'object') { module.exports = Triangulate; }

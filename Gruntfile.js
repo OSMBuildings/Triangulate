@@ -23,7 +23,7 @@ module.exports = function(grunt) {
           banner: "var <%=pkg.name%> = (function() {\n",
           footer: "\nreturn <%=pkg.name%>;\n\n"+
           "}());\n\n"+
-          "if (typeof exports === 'object') { exports = <%=pkg.name%>; }\n"
+          "if (typeof module === 'object') { module.exports = <%=pkg.name%>; }\n"
         },
 
         src: [
