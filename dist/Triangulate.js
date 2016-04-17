@@ -1256,8 +1256,8 @@ var Triangulate = {};
       roofHeight = properties.roofHeight || DEFAULT_ROOF_HEIGHT,
 
       colorVariance = (id/2%2 ? -1 : +1)*(id%2 ? 0.03 : 0.06),
-      roofColor = randomizeColor(color || properties.roofColor || properties.color || getMaterialColor(properties.roofMaterial), colorVariance),
-      wallColor = randomizeColor(color || properties.wallColor || properties.color || getMaterialColor(properties.material), colorVariance);
+      wallColor = randomizeColor(color || properties.wallColor || properties.color || getMaterialColor(properties.material), colorVariance),
+      roofColor = randomizeColor(color || properties.roofColor || getMaterialColor(properties.roofMaterial), colorVariance);
 
     // flat roofs or roofs we can't handle should not affect building's height
     switch (properties.roofShape) {
