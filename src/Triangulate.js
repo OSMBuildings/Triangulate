@@ -11,7 +11,7 @@ var Triangulate = {};
 
   var DEFAULT_HEIGHT = 10;
   var DEFAULT_ROOF_HEIGHT = 3;
-  var DEFAULT_COLOR = 'rgb(220, 210, 200)';
+  var DEFAULT_COLOR = parseColor('rgb(220, 210, 200)');
 
   // number of windows per horizontal meter of building wall
   var WINDOWS_PER_METER = 0.5;
@@ -209,7 +209,7 @@ var Triangulate = {};
   }
 
   function randomizeColor(color, variance) {
-    var c = new Color(color || DEFAULT_COLOR).toArray(); // TODO: don't parse default colors every time
+    var c = parseColor(color) || DEFAULT_COLOR;
     return [c[0]+variance, c[1]+variance, c[2]+variance];
   }
 

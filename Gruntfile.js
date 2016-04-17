@@ -20,18 +20,14 @@ module.exports = function(grunt) {
       default: {
         options: {
           separator: '\n',
-          banner: "(function(global) {",
-          footer: "if (typeof global.define === 'function') {"+
-          "global.define([], <%=pkg.name%>);"+
-          "} else if (typeof global.exports === 'object') {"+
-          "global.exports = <%=pkg.name%>;"+
-          "} else {"+
-          "global.<%=pkg.name%> = <%=pkg.name%>;"+
-          "}\n"+
-          "}(this));"
+          banner: "var <%=pkg.name%> = (function() {\n",
+          footer: "\nreturn <%=pkg.name%>;\n\n"+
+          "}());\n\n"+
+          "if (typeof exports === 'object') { exports = <%=pkg.name%>; }\n"
         },
+
         src: [
-          'node_modules/Color/src/Color.js',
+          'src/parseColor.js',
           'lib/earcut.custom.js',
           'src/vec2.js',
           'src/vec3.js',

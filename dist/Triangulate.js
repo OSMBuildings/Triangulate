@@ -1,4 +1,5 @@
-(function(global) {var w3cColors = {
+var Triangulate = (function() {
+var w3cColors = {
   aliceblue: '#f0f8ff',
   antiquewhite: '#faebd7',
   aqua: '#00ffff',
@@ -149,137 +150,25 @@
   yellowgreen: '#9acd32'
 };
 
-function hue2rgb(p, q, t) {
-  if (t<0) t += 1;
-  if (t>1) t -= 1;
-  if (t<1/6) return p + (q - p)*6*t;
-  if (t<1/2) return q;
-  if (t<2/3) return p + (q - p)*(2/3 - t)*6;
-  return p;
-}
-
-function clamp(v, max) {
-  return Math.min(max, Math.max(0, v || 0));
-}
-
-/**
- * @param str, object can be in any of these: 'red', '#0099ff', 'rgb(64, 128, 255)', 'rgba(64, 128, 255, 0.5)', { r:0.2, g:0.3, b:0.9, a:1 }
- */
-var Color = function(str) {
+var parseColor = exports = function(str) {
   str = str || '';
-
-  if (typeof str === 'object') {
-    var rgba = str;
-    this.r = clamp(rgba.r, max);
-    this.g = clamp(rgba.g, max);
-    this.b = clamp(rgba.b, max);
-    this.a = (rgba.a !== undefined ? clamp(rgba.a, 1) : 1);
-  } else if (typeof str === 'string') {
-    str = str.toLowerCase();
-    str = w3cColors[str] || str;
-    var m;
-    if ((m = str.match(/^#?(\w{2})(\w{2})(\w{2})$/))) {
-      this.r = parseInt(m[1], 16)/255;
-      this.g = parseInt(m[2], 16)/255;
-      this.b = parseInt(m[3], 16)/255;
-      this.a = 1;
-    } else if ((m = str.match(/rgba?\((\d+)\D+(\d+)\D+(\d+)(\D+([\d.]+))?\)/))) {
-      this.r = parseInt(m[1], 10)/255;
-      this.g = parseInt(m[2], 10)/255;
-      this.b = parseInt(m[3], 10)/255;
-      this.a = m[4] ? parseFloat(m[5]) : 1;
-    }
+  str = str.toLowerCase();
+  str = w3cColors[str] || str;
+  var m;
+  if ((m = str.match(/^#?(\w{2})(\w{2})(\w{2})$/))) {
+    return [
+      parseInt(m[1], 16)/255,
+      parseInt(m[2], 16)/255,
+      parseInt(m[3], 16)/255
+    ];
   }
-};
 
-Color.prototype = {
-
-  toHSL: function() {
-    var
-      max = Math.max(this.r, this.g, this.b),
-      min = Math.min(this.r, this.g, this.b),
-      h, s, l = (max + min)/2,
-      d = max - min;
-
-    if (!d) {
-      h = s = 0; // achromatic
-    } else {
-      s = l>0.5 ? d/(2 - max - min) : d/(max + min);
-      switch (max) {
-        case this.r:
-          h = (this.g - this.b)/d + (this.g<this.b ? 6 : 0);
-          break;
-        case this.g:
-          h = (this.b - this.r)/d + 2;
-          break;
-        case this.b:
-          h = (this.r - this.g)/d + 4;
-          break;
-      }
-      h *= 60;
-    }
-
-    return { h: h, s: s, l: l };
-  },
-
-  fromHSL: function(hsl) {
-    // h = clamp(hsl.h, 360),
-    // s = clamp(hsl.s, 1),
-    // l = clamp(hsl.l, 1),
-
-    // achromatic
-    if (hsl.s === 0) {
-      this.r = hsl.l;
-      this.g = hsl.l;
-      this.b = hsl.l;
-    } else {
-      var
-        q = hsl.l<0.5 ? hsl.l*(1 + hsl.s) : hsl.l + hsl.s - hsl.l*hsl.s,
-        p = 2*hsl.l - q;
-      hsl.h /= 360;
-      this.r = hue2rgb(p, q, hsl.h + 1/3);
-      this.g = hue2rgb(p, q, hsl.h);
-      this.b = hue2rgb(p, q, hsl.h - 1/3);
-    }
-
-    return this;
-  },
-
-  toString: function() {
-    if (this.a === 1) {
-      return '#' + ((1<<24) + (Math.round(this.r*255)<<16) + (Math.round(this.g*255)<<8) + Math.round(this.b*255)).toString(16).slice(1, 7);
-    }
-    return 'rgba(' + [Math.round(this.r*255), Math.round(this.g*255), Math.round(this.b*255), this.a.toFixed(2)].join(',') + ')';
-  },
-
-  toArray: function() {
-    return [this.r, this.g, this.b];
-  },
-
-  hue: function(h) {
-    var hsl = this.toHSL();
-    hsl.h *= h;
-    this.fromHSL(hsl);
-    return this;
-  },
-
-  saturation: function(s) {
-    var hsl = this.toHSL();
-    hsl.s *= s;
-    this.fromHSL(hsl);
-    return this;
-  },
-
-  lightness: function(l) {
-    var hsl = this.toHSL();
-    hsl.l *= l;
-    this.fromHSL(hsl);
-    return this;
-  },
-
-  alpha: function(a) {
-    this.a *= a;
-    return this;
+  if ((m = str.match(/rgba?\((\d+)\D+(\d+)\D+(\d+)(\D+([\d.]+))?\)/))) {
+    return [
+      parseInt(m[1], 10)/255,
+      parseInt(m[2], 10)/255,
+      parseInt(m[3], 10)/255
+    ]
   }
 };
 
@@ -1271,7 +1160,7 @@ var Triangulate = {};
 
   var DEFAULT_HEIGHT = 10;
   var DEFAULT_ROOF_HEIGHT = 3;
-  var DEFAULT_COLOR = 'rgb(220, 210, 200)';
+  var DEFAULT_COLOR = parseColor('rgb(220, 210, 200)');
 
   // number of windows per horizontal meter of building wall
   var WINDOWS_PER_METER = 0.5;
@@ -1469,7 +1358,7 @@ var Triangulate = {};
   }
 
   function randomizeColor(color, variance) {
-    var c = new Color(color || DEFAULT_COLOR).toArray(); // TODO: don't parse default colors every time
+    var c = parseColor(color) || DEFAULT_COLOR;
     return [c[0]+variance, c[1]+variance, c[2]+variance];
   }
 
@@ -1530,5 +1419,9 @@ var Triangulate = {};
   }
 
 }());
-if (typeof global.define === 'function') {global.define([], Triangulate);} else if (typeof global.exports === 'object') {global.exports = Triangulate;} else {global.Triangulate = Triangulate;}
-}(this));
+
+return Triangulate;
+
+}());
+
+if (typeof exports === 'object') { exports = Triangulate; }
