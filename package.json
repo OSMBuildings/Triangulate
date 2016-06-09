@@ -1,6 +1,6 @@
 {
   "name": "Triangulate",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "homepage": "http://osmbuildings.org",
   "description": "GeoJSON triangulation scripts collection. Mainly used for OSM Buildings backend + frontend.",
   "main": "dist/Triangulate.js",
@@ -16,6 +16,6 @@
   "devDependencies": {
     "grunt": "^0.4.4",
     "grunt-contrib-concat": "~0.5.1",
-    "grunt-contrib-jshint": "^0.11.0"
+    "grunt-contrib-jshint": "^1.0.0"
   }
 }

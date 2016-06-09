@@ -149,7 +149,7 @@ var w3cColors = {
   yellowgreen: '#9acd32'
 };
 
-var parseColor = exports = function(str) {
+function parseColor(str) {
   str = str || '';
   str = str.toLowerCase();
   str = w3cColors[str] || str;
@@ -167,6 +167,6 @@ var parseColor = exports = function(str) {
       parseInt(m[1], 10)/255,
       parseInt(m[2], 10)/255,
       parseInt(m[3], 10)/255
-    ]
+    ];
   }
-};
+}

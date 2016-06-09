@@ -9,6 +9,8 @@ module.exports = function(grunt) {
         globals: {}
       },
       all: [
+        'src/parseColor.js',
+        'lib/earcut.custom.js',
         'src/vec2.js',
         'src/vec3.js',
         'src/split.js',
